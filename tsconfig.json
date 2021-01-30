@@ -6,8 +6,17 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "sourceMap": true,
+    "esModuleInterop": true, 
     "target": "es2017",
-    "outDir": "lib"
+    "outDir": "lib",
+    "baseUrl": "./",                       /* Base directory to resolve non-absolute module names. */
+    "paths": {
+       "@modules/*": ["./src/modules/*"],
+       "@config/*": ["./src/config/*"], 
+       "@utils/*": ["./src/utils/*"]
+    }, 
+    "skipLibCheck": true,                     
+    "forceConsistentCasingInFileNames": true 
   },
   "include": ["./**/*.ts"],
   "exclude": [

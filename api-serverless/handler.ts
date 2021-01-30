@@ -53,12 +53,12 @@ const uploadFileToS3 = async (userFile) => {
 
  
 
-export const createUser: APIGatewayProxyHandler = async (event, _context,res:Response) => {
+export const createUser: APIGatewayProxyHandler = async (event, _context) => {
   const requestBody: requestParams = JSON.parse(event.body);
   const { userFirstName, userLastName,userEmail, userPassword,userFile } = requestBody;
   
 
-  const brewImagePath = await uploadFileToS3(userFile);
+  const filePath = await uploadFileToS3(userFile);
 
   try {
     const params = {
@@ -69,16 +69,10 @@ export const createUser: APIGatewayProxyHandler = async (event, _context,res:Res
         userLastName,
         userEmail,
         userPassword,
-        brewImage: brewImagePath 
+        brewImage: filePath 
       },
     };
-    await dynamoDB.put(params).promise();
-
-    const emailUserTemplate = {
-        subject: `Usuário criado com sucesso`
-      } as EmailTemplate;
-    
-      await sendEmail("fernandomuto22@gmail.com", emailUserTemplate, res);
+    await dynamoDB.put(params).promise();  
       
     return {
       statusCode: 200,
